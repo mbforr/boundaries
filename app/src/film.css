@@ -1,0 +1,17 @@
+/*
+ * Plates carry no readouts.
+ *
+ * /matte.html and /key.html run the deck or a gallery piece with the map restyled, but
+ * what they produce goes into an edit rather than being read on screen, so the counter,
+ * the caption, the pen swatch, the cards, the overlays, the ring count and the layer
+ * picker all come off.
+ *
+ * This lives in its own file, imported by gallery/film.ts, because the three pieces load
+ * different stylesheets: the deck imports styles.css and never touches gallery.css, so
+ * rules kept there covered the montage and the pen and left the deck's HUD on screen.
+ */
+body.is-film .gl-chrome,
+body.is-film .gl-pick,
+body.is-film #hud,
+/* The deck mounts its GEOID, clock, lock and pen-legend overlays on #stage, not in #hud. */
+body.is-film .overlays { display: none !important; }

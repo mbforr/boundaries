@@ -1,0 +1,814 @@
+# The 93-beat crosswalk: every counter mark in docs/script_v3.md.
+#
+# Scaffolded by scripts/scaffold_beats.py (n, chapter, pen, script_line), layer
+# mapping completed by hand. scripts/export_web.py revalidates on every run: all of
+# 1..93 present exactly once, and every non-null layer present in the GeoPackage.
+#
+#   render: polygon  layer names a built GeoPackage layer
+#   render: card     no geometry exists — a typographic beat. Never fake a polygon.
+#   scope:  national | nyc      which export the app loads
+#
+# 51 polygon beats over 49 distinct layers (census_place and census_cbsa each serve
+# two beats); 42 card beats. The 50th built layer, nyc_borough, is used only by the
+# reveal's 'Manhattan drawn twice' scene and owns no counter mark.
+
+beats:
+  - n: 1
+    label: 'The United States'
+    chapter: tier-1
+    pen: congress
+    layer: census_nation
+    scope: national
+    render: polygon
+    script_line: 140
+  - n: 2
+    label: 'The 50 states'
+    chapter: tier-1
+    pen: congress
+    layer: census_state
+    scope: national
+    render: polygon
+    script_line: 142
+  - n: 3
+    label: 'Counties'
+    chapter: tier-1
+    pen: congress
+    layer: census_county
+    scope: national
+    render: polygon
+    script_line: 144
+  - n: 4
+    label: 'County subdivision'
+    chapter: tier-1
+    pen: congress
+    layer: census_cousub
+    scope: nyc
+    render: polygon
+    note: 'town, township, borough'
+    script_line: 148
+  - n: 5
+    label: 'City limits'
+    chapter: tier-1
+    pen: congress
+    layer: census_place
+    scope: nyc
+    render: polygon
+    note: 'the municipal boundary'
+    script_line: 150
+  - n: 6
+    label: 'Census tract'
+    chapter: count-you
+    pen: statisticians
+    layer: census_tract
+    scope: nyc
+    render: polygon
+    script_line: 174
+  - n: 7
+    label: 'Block group'
+    chapter: count-you
+    pen: statisticians
+    layer: census_bg
+    scope: nyc
+    render: polygon
+    script_line: 176
+  - n: 8
+    label: 'Census block'
+    chapter: count-you
+    pen: statisticians
+    layer: census_block
+    scope: nyc
+    render: polygon
+    script_line: 178
+  - n: 9
+    label: 'Census place'
+    chapter: count-you
+    pen: statisticians
+    layer: census_place
+    scope: nyc
+    render: polygon
+    note: 'including the CDP with no government'
+    script_line: 206
+  - n: 10
+    label: 'Urban area'
+    chapter: count-you
+    pen: statisticians
+    layer: census_urban_area
+    scope: national
+    render: polygon
+    script_line: 206
+  - n: 11
+    label: 'Public use microdata area'
+    chapter: count-you
+    pen: statisticians
+    layer: census_puma
+    scope: nyc
+    render: polygon
+    script_line: 206
+  - n: 12
+    label: 'Census region'
+    chapter: count-you
+    pen: statisticians
+    layer: census_region
+    scope: national
+    render: polygon
+    script_line: 206
+  - n: 13
+    label: 'Census division'
+    chapter: count-you
+    pen: statisticians
+    layer: census_division
+    scope: national
+    render: polygon
+    script_line: 206
+  - n: 14
+    label: 'Metropolitan statistical area'
+    chapter: count-you
+    pen: statisticians
+    layer: census_cbsa
+    scope: national
+    render: polygon
+    note: 'LSAD M1'
+    script_line: 224
+  - n: 15
+    label: 'Metropolitan division'
+    chapter: count-you
+    pen: statisticians
+    layer: census_metdiv
+    scope: national
+    render: polygon
+    script_line: 224
+  - n: 16
+    label: 'Combined statistical area'
+    chapter: count-you
+    pen: statisticians
+    layer: census_csa
+    scope: national
+    render: polygon
+    script_line: 224
+  - n: 17
+    label: 'Micropolitan statistical area'
+    chapter: count-you
+    pen: statisticians
+    layer: census_cbsa
+    scope: national
+    render: polygon
+    note: 'LSAD M2'
+    script_line: 226
+  - n: 18
+    label: 'Congressional district'
+    chapter: political
+    pen: politicians
+    layer: census_cd
+    scope: nyc
+    render: polygon
+    script_line: 234
+  - n: 19
+    label: 'State senate district'
+    chapter: political
+    pen: politicians
+    layer: census_sldu
+    scope: nyc
+    render: polygon
+    script_line: 236
+  - n: 20
+    label: 'State house district'
+    chapter: political
+    pen: politicians
+    layer: census_sldl
+    scope: nyc
+    render: polygon
+    script_line: 238
+  - n: 21
+    label: 'Voting precinct'
+    chapter: political
+    pen: politicians
+    layer: nyc_election_district
+    scope: nyc
+    render: polygon
+    note: 'no clean national file exists'
+    script_line: 240
+  - n: 22
+    label: 'City council ward'
+    chapter: political
+    pen: politicians
+    layer: nyc_council_district
+    scope: nyc
+    render: polygon
+    script_line: 242
+  - n: 23
+    label: 'Community district'
+    chapter: political
+    pen: politicians
+    layer: nyc_community_district
+    scope: nyc
+    render: polygon
+    script_line: 244
+  - n: 24
+    label: 'County commissioner district'
+    chapter: political
+    pen: politicians
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'no national file exists'
+    script_line: 246
+  - n: 25
+    label: 'Judicial election district'
+    chapter: political
+    pen: politicians
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'drawn state by state, no national file'
+    script_line: 248
+  - n: 26
+    label: 'School district'
+    chapter: political
+    pen: politicians
+    layer: census_unsd
+    scope: nyc
+    render: polygon
+    script_line: 262
+  - n: 27
+    label: 'School attendance zone'
+    chapter: political
+    pen: politicians
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'NCES SABS not in the stack'
+    script_line: 264
+  - n: 28
+    label: 'Elementary school district'
+    chapter: political
+    pen: politicians
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 272
+  - n: 29
+    label: 'Secondary school district'
+    chapter: political
+    pen: politicians
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 272
+  - n: 30
+    label: 'Community school district'
+    chapter: political
+    pen: politicians
+    layer: nyc_school_district
+    scope: nyc
+    render: polygon
+    note: "New York's fourth arrangement"
+    script_line: 272
+  - n: 31
+    label: 'State trial district'
+    chapter: legal
+    pen: courts
+    layer: courts_ny_judicial_district
+    scope: nyc
+    render: polygon
+    script_line: 298
+  - n: 32
+    label: 'State appellate district'
+    chapter: legal
+    pen: courts
+    layer: courts_ny_appellate_dept
+    scope: nyc
+    render: polygon
+    script_line: 300
+  - n: 33
+    label: 'Federal district court'
+    chapter: legal
+    pen: courts
+    layer: courts_fed_district
+    scope: national
+    render: polygon
+    script_line: 302
+  - n: 34
+    label: 'Federal circuit'
+    chapter: legal
+    pen: courts
+    layer: courts_fed_circuit
+    scope: national
+    render: polygon
+    script_line: 304
+  - n: 35
+    label: 'Tribal boundary'
+    chapter: legal
+    pen: courts
+    layer: census_aiannh
+    scope: national
+    render: polygon
+    note: '867 areas: reservations, off-reservation trust land, OTSAs and ANVSAs'
+    script_line: 312
+  - n: 36
+    label: 'Alaska Native regional corporation'
+    chapter: legal
+    pen: courts
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 320
+  - n: 37
+    label: 'National park'
+    chapter: legal
+    pen: courts
+    layer: nps_boundary
+    scope: national
+    render: polygon
+    script_line: 350
+  - n: 38
+    label: 'National forest'
+    chapter: legal
+    pen: courts
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 352
+  - n: 39
+    label: 'BLM rangeland'
+    chapter: legal
+    pen: courts
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 354
+  - n: 40
+    label: 'Military base'
+    chapter: legal
+    pen: courts
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 356
+  - n: 41
+    label: 'Grid interconnection'
+    chapter: rung-5
+    pen: markets
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'derivable from balancing authorities'
+    script_line: 392
+  - n: 42
+    label: 'Regional transmission organization'
+    chapter: rung-5
+    pen: markets
+    layer: energy_rto_iso
+    scope: national
+    render: polygon
+    script_line: 404
+  - n: 43
+    label: 'Balancing authority'
+    chapter: rung-5
+    pen: markets
+    layer: energy_balancing_authority
+    scope: national
+    render: polygon
+    script_line: 406
+  - n: 44
+    label: 'Pricing zone'
+    chapter: rung-5
+    pen: markets
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 408
+  - n: 45
+    label: 'Reliability region'
+    chapter: rung-5
+    pen: markets
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 410
+  - n: 46
+    label: 'Electric utility territory'
+    chapter: rung-5
+    pen: markets
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 412
+  - n: 47
+    label: 'Gas utility territory'
+    chapter: rung-5
+    pen: markets
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 412
+  - n: 48
+    label: 'Petroleum district (PADD)'
+    chapter: rung-5
+    pen: markets
+    layer: fedadmin_padd
+    scope: national
+    render: polygon
+    script_line: 414
+  - n: 49
+    label: 'Federal Reserve district'
+    chapter: rung-5
+    pen: markets
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'the source blocks automated access'
+    script_line: 416
+  - n: 50
+    label: 'Federal Home Loan Bank district'
+    chapter: rung-5
+    pen: markets
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 422
+  - n: 51
+    label: 'FEMA region'
+    chapter: rung-5
+    pen: markets
+    layer: fedadmin_fema_region
+    scope: national
+    render: polygon
+    script_line: 424
+  - n: 52
+    label: 'EPA region'
+    chapter: rung-5
+    pen: markets
+    layer: fedadmin_epa_region
+    scope: national
+    render: polygon
+    script_line: 424
+  - n: 53
+    label: 'Standard federal region'
+    chapter: rung-5
+    pen: markets
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 424
+  - n: 54
+    label: 'CBP field office territory'
+    chapter: rung-5
+    pen: markets
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 426
+  - n: 55
+    label: 'Opportunity zone'
+    chapter: rung-5
+    pen: markets
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 426
+  - n: 56
+    label: 'NWS forecast zone'
+    chapter: rung-5
+    pen: markets
+    layer: nws_forecast_zone
+    scope: national
+    render: polygon
+    script_line: 428
+  - n: 57
+    label: 'County warning area'
+    chapter: rung-5
+    pen: markets
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 428
+  - n: 58
+    label: 'Fire weather zone'
+    chapter: rung-5
+    pen: markets
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 428
+  - n: 59
+    label: 'Air route traffic control center'
+    chapter: rung-5
+    pen: markets
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 430
+  - n: 60
+    label: 'Airspace class'
+    chapter: rung-5
+    pen: markets
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 432
+  - n: 61
+    label: 'Time zone'
+    chapter: rung-5
+    pen: markets
+    layer: fedadmin_time_zone
+    scope: national
+    render: polygon
+    script_line: 436
+  - n: 62
+    label: 'Area code'
+    chapter: rung-5
+    pen: markets
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'privately licensed. Not shippable.'
+    script_line: 442
+  - n: 63
+    label: 'Media market (DMA)'
+    chapter: rung-5
+    pen: markets
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'privately owned. Not licensable.'
+    script_line: 444
+  - n: 64
+    label: 'FCC broadcast contour'
+    chapter: rung-5
+    pen: markets
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 448
+  - n: 65
+    label: 'ZIP code tabulation area'
+    chapter: rung-5
+    pen: markets
+    layer: census_zcta
+    scope: nyc
+    render: polygon
+    note: 'the stand-in for a thing with no shape'
+    script_line: 458
+  - n: 66
+    label: 'Fire protection district'
+    chapter: swarm
+    pen: surveyors
+    layer: nyc_fire_battalion
+    scope: nyc
+    render: polygon
+    script_line: 464
+  - n: 67
+    label: 'Emergency medical services zone'
+    chapter: swarm
+    pen: surveyors
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'no national file exists'
+    script_line: 466
+  - n: 68
+    label: 'Police precinct'
+    chapter: swarm
+    pen: surveyors
+    layer: nyc_police_precinct
+    scope: nyc
+    render: polygon
+    script_line: 468
+  - n: 69
+    label: 'Water district'
+    chapter: swarm
+    pen: surveyors
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'no national file exists'
+    script_line: 470
+  - n: 70
+    label: 'Sewer district'
+    chapter: swarm
+    pen: surveyors
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'no national file exists'
+    script_line: 472
+  - n: 71
+    label: 'Sanitation district'
+    chapter: swarm
+    pen: surveyors
+    layer: nyc_sanitation_district
+    scope: nyc
+    render: polygon
+    script_line: 474
+  - n: 72
+    label: 'Library district'
+    chapter: swarm
+    pen: surveyors
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'no national file exists'
+    script_line: 476
+  - n: 73
+    label: 'Tax increment financing district'
+    chapter: swarm
+    pen: surveyors
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'no national file exists'
+    script_line: 478
+  - n: 74
+    label: 'Mosquito abatement district'
+    chapter: swarm
+    pen: surveyors
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'no national file exists'
+    script_line: 480
+  - n: 75
+    label: 'Zoning district'
+    chapter: swarm
+    pen: surveyors
+    layer: nyc_zoning_district
+    scope: nyc
+    render: polygon
+    script_line: 482
+  - n: 76
+    label: 'Special purpose district'
+    chapter: swarm
+    pen: surveyors
+    layer: nyc_special_purpose_district
+    scope: nyc
+    render: polygon
+    script_line: 484
+  - n: 77
+    label: 'Business improvement district'
+    chapter: swarm
+    pen: surveyors
+    layer: nyc_bid
+    scope: nyc
+    render: polygon
+    script_line: 486
+  - n: 78
+    label: 'Flood zone'
+    chapter: swarm
+    pen: surveyors
+    layer: fema_flood_nfhl
+    scope: nyc
+    render: polygon
+    script_line: 488
+  - n: 79
+    label: 'Watershed region'
+    chapter: swarm
+    pen: surveyors
+    layer: usgs_wbd_huc2
+    scope: national
+    render: polygon
+    note: 'HUC2'
+    script_line: 492
+  - n: 80
+    label: 'Watershed subregion'
+    chapter: swarm
+    pen: surveyors
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'HUC4 not in the stack'
+    script_line: 494
+  - n: 81
+    label: 'Watershed basin'
+    chapter: swarm
+    pen: surveyors
+    layer: usgs_wbd_huc8
+    scope: nyc
+    render: polygon
+    note: 'HUC8'
+    script_line: 494
+  - n: 82
+    label: 'Local catchment'
+    chapter: swarm
+    pen: surveyors
+    layer: usgs_wbd_huc12
+    scope: nyc
+    render: polygon
+    note: 'HUC12'
+    script_line: 494
+  - n: 83
+    label: 'Ecoregion'
+    chapter: swarm
+    pen: surveyors
+    layer: epa_ecoregion_l3
+    scope: national
+    render: polygon
+    note: 'level 3'
+    script_line: 496
+  - n: 84
+    label: 'Ecoregion, level 4'
+    chapter: swarm
+    pen: surveyors
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'only level 3 is in the stack'
+    script_line: 496
+  - n: 85
+    label: 'Plant hardiness zone'
+    chapter: swarm
+    pen: surveyors
+    layer: usda_hardiness_zone
+    scope: national
+    render: polygon
+    script_line: 498
+  - n: 86
+    label: 'Soil survey area'
+    chapter: swarm
+    pen: surveyors
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 500
+  - n: 87
+    label: 'Crop reporting district'
+    chapter: swarm
+    pen: surveyors
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 500
+  - n: 88
+    label: 'Public Land Survey section'
+    chapter: swarm
+    pen: surveyors
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 502
+  - n: 89
+    label: 'Historic district'
+    chapter: swarm
+    pen: surveyors
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 508
+  - n: 90
+    label: 'Individual landmark'
+    chapter: swarm
+    pen: surveyors
+    layer: nyc_landmark_lot
+    scope: nyc
+    render: polygon
+    note: 'the boundary is the lot'
+    script_line: 510
+  - n: 91
+    label: 'National Historic Landmark'
+    chapter: swarm
+    pen: surveyors
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 510
+  - n: 92
+    label: 'Special district'
+    chapter: swarm
+    pen: surveyors
+    layer: null
+    scope: national
+    render: card
+    card_sub: '39,500 of them, no single file'
+    script_line: 512
+  - n: 93
+    label: 'Economic development region'
+    chapter: swarm
+    pen: surveyors
+    layer: null
+    scope: national
+    render: card
+    card_sub: 'not in the stack'
+    script_line: 514

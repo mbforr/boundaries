@@ -1,0 +1,142 @@
+/*
+ * Chrome for the two gallery pages. The deck's type system applies unchanged — Helvetica,
+ * two weights, --track-display on the big number and --track-caps on anything uppercase —
+ * so these pages and the deck are visibly the same film.
+ */
+
+.gl-chrome {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+.gl-chrome.is-hidden { opacity: 0; }
+
+.gl-block {
+  position: absolute;
+  left: 3.2rem;
+  bottom: 2.8rem;
+  /* Wide enough that the provenance line does not wrap back up into the title. */
+  max-width: 78ch;
+}
+
+.gl-title {
+  font-size: 3.1rem;
+  font-weight: 700;
+  letter-spacing: var(--track-display);
+  line-height: 1.02;
+  text-shadow: 0 2px 22px rgba(0, 0, 0, 0.85);
+}
+
+.gl-sub {
+  margin-top: 0.75rem;
+  font-size: 0.92rem;
+  font-weight: 400;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.9);
+}
+
+.gl-corner {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: baseline;
+  gap: 1.1rem;
+}
+.gl-index {
+  font-size: 4.6rem;
+  font-weight: 700;
+  line-height: 0.85;
+  letter-spacing: var(--track-display);
+  font-variant-numeric: tabular-nums;
+}
+.gl-pen {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--dim);
+  padding-bottom: 0.35rem;
+}
+.gl-pen i {
+  width: 0.72rem;
+  height: 0.72rem;
+  border-radius: 50%;
+  display: block;
+  flex: none;
+}
+
+.gl-status {
+  position: absolute;
+  right: 3.2rem;
+  top: 2.6rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--dim);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.gl-help {
+  position: absolute;
+  right: 3.2rem;
+  bottom: 2.9rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  color: #5c6672;
+  text-align: right;
+  line-height: 1.7;
+}
+
+/* A hairline along the very top of the stage: the run's progress, nothing else. */
+.gl-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+}
+.gl-progress i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--ink);
+}
+
+/*
+ * The layer picker on /draw.html. Pointer events are off across the chrome so the map can
+ * still be dragged; the select is the one thing that has to take a click back.
+ */
+.gl-pick {
+  position: absolute;
+  left: 3.2rem;
+  top: 2.4rem;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.gl-pick label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.gl-pick select {
+  font-family: var(--font);
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: rgba(8, 10, 13, 0.9);
+  border: 1px solid #2a323c;
+  padding: 0.4rem 0.6rem;
+  min-width: 22rem;
+}
+.gl-pick select:focus { outline: 1px solid var(--dim); }
+body.is-recording .gl-pick { display: none; }

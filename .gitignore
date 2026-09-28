@@ -1,0 +1,12 @@
+.DS_Store
+__pycache__/
+*.pyc
+node_modules/
+
+# Downloaded TIGER archives. 45 MB, immutable, and re-fetched on demand by
+# scripts/fetch_scene_props.py — their sha256s are recorded in qa/scene_props.md, which is
+# the part worth keeping.
+data/raw_props/
+
+# Smoke-test screenshots. 9.3 MB of build artefacts; scripts/smoke.py rewrites them.
+qa/shots/
