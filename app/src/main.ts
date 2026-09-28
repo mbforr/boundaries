@@ -13,19 +13,13 @@ import { Drive } from './engine/drive';
 import { readRecordOpts, applyRecordMode } from './record';
 import { addHatch } from './engine/hatch';
 import { applyFilmStyle } from './filmstyle';
+import { requireToken, watchTokenErrors } from './token';
 import { Cues } from './cues';
 import { beatLayerId } from './scenes';
 import { BEATS } from './beats.generated';
 import type { LayerId } from './layers.generated';
 
-const token = import.meta.env.VITE_MAPBOX_TOKEN as string | undefined;
-if (!token) {
-  document.body.innerHTML =
-    '<p style="color:#fff;font:16px \'Helvetica Neue\',Helvetica,Arial,sans-serif;padding:2rem">' +
-    'VITE_MAPBOX_TOKEN is not set. Copy app/.env.example to app/.env and add your token.</p>';
-  throw new Error('missing VITE_MAPBOX_TOKEN');
-}
-mapboxgl.accessToken = token;
+mapboxgl.accessToken = requireToken();
 
 const params = new URLSearchParams(location.search);
 const record = readRecordOpts(params);
@@ -60,6 +54,10 @@ const map = new mapboxgl.Map({
  * Mouse pan and zoom stay enabled outside record mode, for framing a shot by hand.
  */
 map.keyboard.disable();
+
+// A token the build has but Mapbox refuses draws an empty stage and says nothing. See
+// token.ts — this is what puts the reason on screen instead.
+watchTokenErrors(map);
 
 const layers = new LayerManager(map, (busy) => hud.setBusy(busy));
 

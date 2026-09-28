@@ -82,21 +82,45 @@ harmless. It is a deliberate floor, not a pin.
 
 ### 3. Set the Mapbox token
 
-Add an environment variable in Vercel, for every environment you deploy:
+Vercel → Settings → Environment Variables. Add it for **Production** (and Preview, if you
+want branch deploys to work):
 
 ```
 VITE_MAPBOX_TOKEN = pk.your_token_here
 ```
 
-**This token ends up in the published JavaScript.** Anything prefixed `VITE_` is inlined
-into the client bundle at build time — that is how Vite works, and it is how a browser
-gets a Mapbox token at all. It must therefore be a *public* (`pk.`) token, never a secret
-(`sk.`) one, and you should add a **URL restriction** to it in the Mapbox dashboard so it
-only works from your Vercel domain:
+**Then redeploy.** This is the step that catches everyone. Anything prefixed `VITE_` is
+read *when the site is built* and inlined into the JavaScript — adding the variable does
+nothing to a deployment that already exists. Deployments → the latest one → Redeploy.
 
-<https://account.mapbox.com/access-tokens/>
+**Then allow the domain on the token.** A Vercel project answers on several hostnames — the
+production domain, a `-git-branch-` one, and a new per-deployment one every time — so a
+token restricted to a single URL will work on one of them and 401 on the rest. At
+<https://account.mapbox.com/access-tokens/>, open the token and either clear its URL
+restrictions or list all of them:
 
-Without that restriction anyone can lift the token from the bundle and spend your quota.
+```
+https://*.vercel.app/*
+https://your-custom-domain.com/*
+```
+
+It must be a public `pk.` token. A secret `sk.` token cannot be used by a browser, and
+because `VITE_` variables end up in the published bundle, putting one there would publish
+it. That is also why the URL restriction matters: the token is readable by anyone who
+views source, and the restriction is what stops it being used elsewhere.
+
+#### If the map still does not draw
+
+The app now says which of the two problems it is, full-screen, rather than leaving a blank
+stage:
+
+| on screen | meaning | fix |
+|---|---|---|
+| **No Mapbox token in this build** | the variable was not set when the build ran | set it, then **redeploy** — an existing deployment cannot pick it up |
+| **Mapbox rejected this token (HTTP 401)** | the token is in the build and Mapbox refused it | almost always a URL restriction that does not cover this hostname |
+
+Before this, a rejected token drew an empty stage and reported nothing at all, which is
+indistinguishable from a broken build.
 
 ### 4. Check the deploy
 

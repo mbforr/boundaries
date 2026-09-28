@@ -6,6 +6,7 @@ import { MAP_STYLE, CAMERAS } from '../config';
 import { stripBasemap } from '../engine/state';
 import { readRecordOpts, applyRecordMode } from '../record';
 import { applyFilmStyle } from '../filmstyle';
+import { requireToken, watchTokenErrors } from '../token';
 
 /**
  * Shared boot for the two gallery pages — /flash.html and /draw.html.
@@ -27,14 +28,7 @@ export interface Gallery {
 }
 
 export function bootGallery(): Gallery {
-  const token = import.meta.env.VITE_MAPBOX_TOKEN as string | undefined;
-  if (!token) {
-    document.body.innerHTML =
-      '<p style="color:#fff;font:16px \'Helvetica Neue\',Helvetica,Arial,sans-serif;padding:2rem">' +
-      'VITE_MAPBOX_TOKEN is not set. Copy app/.env.example to app/.env and add your token.</p>';
-    throw new Error('missing VITE_MAPBOX_TOKEN');
-  }
-  mapboxgl.accessToken = token;
+  mapboxgl.accessToken = requireToken();
 
   const params = new URLSearchParams(location.search);
   const stage = document.getElementById('stage')!;
@@ -55,6 +49,7 @@ export function bootGallery(): Gallery {
   // container, which fires before a window listener can preventDefault. The arrows drive
   // the reel here too, so the map does not get a vote.
   map.keyboard.disable();
+  watchTokenErrors(map);
 
   applyRecordMode(stage, map, readRecordOpts(params));
 
