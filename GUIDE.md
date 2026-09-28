@@ -29,16 +29,16 @@ They are generated from a GeoPackage that is not in this repo, so a build machin
 produce them. Without the two `.ts` files the build fails at `tsc`; without `public/data/`
 every layer 404s at runtime.
 
+The repo is already initialised and committed on `main`, so all that is left is the
+remote:
+
 ```sh
-git init
-git add -A
-git commit -m "One Landmark. 68 Governments."
 git remote add origin git@github.com:<you>/<repo>.git
 git push -u origin main
 ```
 
-94 MB is comfortable for GitHub — the hard per-file limit is 100 MB and the largest file
-here is 17 MB — but it is a large repo to clone. If that becomes a problem the fix is to
+94 MB of GeoJSON is comfortable for GitHub — the hard per-file limit is 100 MB and the
+largest file here is 17 MB — and it packs down to a 28 MB clone. It is still a large repo. If that becomes a problem the fix is to
 serve `public/data/` from object storage and point the app at a base URL, not Git LFS,
 whose free bandwidth allowance one full run of `/flash.html` would eat into.
 
