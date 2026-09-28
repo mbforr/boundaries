@@ -45,17 +45,40 @@ whose free bandwidth allowance one full run of `/flash.html` would eat into.
 
 ### 2. Import into Vercel
 
-`vercel.json` at the repo root already does the work, so the defaults are correct:
+The app lives in `app/`, not at the repo root, and that is the one thing to get right.
+There are two valid ways to set it up and the repo carries the config for both:
+
+**Either — Root Directory = `app`** (recommended; the dashboard setting is under Settings →
+Build and Deployment → Root Directory). Vercel then reads `app/vercel.json`, auto-detects
+Vite, and every default is already correct:
+
+| setting | value |
+|---|---|
+| Root Directory | `app` |
+| Framework preset | Vite (auto) |
+| Install command | `npm ci` (auto) |
+| Build command | `npm run build` (auto) |
+| Output directory | `dist` (auto) |
+
+**Or — Root Directory left at the repo root.** Vercel reads the root `vercel.json`, which
+changes into `app/` explicitly:
 
 | setting | value |
 |---|---|
 | Framework preset | Other |
-| Install command | `npm --prefix app ci` |
-| Build command | `npm --prefix app run build` |
+| Install command | `cd app && npm ci` |
+| Build command | `cd app && npm run build` |
 | Output directory | `app/dist` |
 
-If you would rather configure it in the dashboard, set **Root Directory** to `app` and
-delete `vercel.json` — Vercel then auto-detects Vite and the rest follows.
+> **If the build fails at the install step with npm printing its usage text** — a wall of
+> `-w|--workspace`, `--install-links`, ending in `Run "npm help ci" for more info` — that is
+> npm's `EUSAGE`, and it means `npm ci` could not find a `package-lock.json` where it was
+> looking. It is a working-directory problem every time: the install command is running
+> somewhere other than the directory holding `app/package-lock.json`. Check the Root
+> Directory setting against the table above. An earlier version of this repo used
+> `npm --prefix app ci`, which works from the repo root but silently looks in the wrong
+> place if the Root Directory is already `app` — both configs above name the directory
+> explicitly instead.
 
 ### 3. Set the Mapbox token
 
