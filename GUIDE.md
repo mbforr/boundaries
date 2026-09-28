@@ -48,37 +48,42 @@ whose free bandwidth allowance one full run of `/flash.html` would eat into.
 The app lives in `app/`, not at the repo root, and that is the one thing to get right.
 
 **Set Root Directory to `app`.** Vercel → Settings → Build and Deployment → Root Directory.
-Everything else is then read from `app/vercel.json` and needs no dashboard changes:
+That is the only manual setting; everything else comes from `vercel.json`:
 
-| setting | value | where it comes from |
-|---|---|---|
-| Root Directory | `app` | the dashboard — the only manual step |
-| Framework preset | Vite | `app/vercel.json` |
-| Install command | `npm ci` | `app/vercel.json` |
-| Build command | `npm run build` | `app/vercel.json` |
-| Output directory | `dist` | `app/vercel.json` |
+| setting | value |
+|---|---|
+| Root Directory | `app` |
+| Framework preset | Vite |
+| Install command | `npm ci` |
+| Build command | `npm run build` |
+| Output directory | `dist` |
 
-Every path in that file is relative to `app/`, because that is where Vercel runs once the
-Root Directory is set. There is deliberately **no `vercel.json` at the repo root**: a config
-there has to guess whether it is running from the repo root or from `app/`, and it cannot
-be right about both — `outputDirectory` alone can only name one of `dist` or `app/dist`.
+Every path there is relative to `app/`, because that is the directory Vercel runs in once
+the Root Directory is set. The same file sits at the repo root **and** in `app/` — they are
+byte-identical, and both exist because Vercel resolves `vercel.json` from the repository
+root while executing commands in the Root Directory, so whichever it picks up says the
+same thing.
 
-> **If the build fails at the install step**, it is a working-directory problem every time.
-> Two signatures, both from getting Root Directory wrong:
+**Leave the dashboard's Build & Output overrides empty.** If Install Command, Build Command
+or Output Directory were ever typed in by hand, they can disagree with `vercel.json` and
+with the Root Directory — an Output Directory of `app/dist` combined with a Root Directory
+of `app` resolves to `app/app/dist`, which does not exist, and the deployment serves
+nothing.
+
+> **Failure signatures, all three of which this repo hit:**
 >
-> - `sh: line 1: cd: app: No such file or directory` — a command is trying to change into
->   `app/` when it is already there. Root Directory is `app` and the command assumes the
->   repo root.
-> - A wall of npm usage text (`-w|--workspace`, `--install-links`) ending in
->   `Run "npm help ci" for more info` — that is npm's `EUSAGE`, and for `npm ci` it means
->   no `package-lock.json` was found where it looked. Same cause, opposite direction.
+> - `sh: line 1: cd: app: No such file or directory` — a command is changing into `app/`
+>   when it is already there. Root Directory is `app`; the command assumes the repo root.
+> - A wall of npm usage text ending in `Run "npm help ci" for more info` — npm's `EUSAGE`.
+>   `npm ci` found no `package-lock.json` where it looked. Same cause, other direction.
+> - **`404 NOT_FOUND` on every path, with a build that reports success** — the build ran but
+>   Vercel is serving a directory with no `index.html` in it. The Output Directory does not
+>   point at the `dist/` the build actually produced. Open the deployment and use the
+>   **Source** tab to see the files it published: if `index.html` is not at the top of that
+>   listing, this is the problem.
 >
-> Both were hit getting this repo onto Vercel. The cure in each case was to stop having a
-> command that cares which directory it starts in.
-
-The `engines` warning in the build log — *"Detected `engines: { node: >=20 }` … will
-automatically upgrade when a new major Node.js Version is released"* — is expected and
-harmless. It is a deliberate floor, not a pin.
+> All three are the same underlying mistake — a path that assumes a different working
+> directory than the one Vercel uses.
 
 ### 3. Set the Mapbox token
 
