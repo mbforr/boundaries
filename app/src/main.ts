@@ -72,6 +72,15 @@ interface Probe {
   __map: unknown; __scene: () => string; __navigating: () => boolean;
   __index: () => number; __deckLength: () => number;
   __audit: () => { scene: string; bad: string[] };
+  __deck: () => DeckRow[];
+}
+
+/** One row of the deck, flattened for scripts/scene_index.py. */
+interface DeckRow {
+  i: number; id: string; beat: number | null; chapter: string;
+  pen: string | null; counter: number | string | null;
+  caption: string | null; card: string | null; cardSub: string | null;
+  layers: string[]; steps: number;
 }
 const probe = window as unknown as Probe;
 probe.__map = map;
@@ -80,9 +89,30 @@ probe.__navigating = () => navigating;
 probe.__index = () => index;
 probe.__deckLength = () => DECK.length;
 /**
+ * The whole deck, flattened.
+ *
+ * scripts/scene_index.py reads this to build SCENES.md rather than re-deriving the deck
+ * order in Python. The splice of 14 choreographed sequences into the 93 beats lives in
+ * scenes.ts and is not worth having a second implementation of — one that could disagree
+ * with the deck and produce an index nobody notices is wrong.
+ */
+probe.__deck = () => DECK.map((s, i) => ({
+  i,
+  id: s.id,
+  beat: s.beat ?? null,
+  chapter: s.chapter,
+  pen: s.pen,
+  counter: s.counter,
+  caption: s.caption,
+  card: s.card?.title ?? null,
+  cardSub: s.card?.sub ?? null,
+  layers: s.layers.map((v) => v.id),
+  steps: s.enter?.length ?? 0,
+}));
+/**
  * Compare what is actually on the map against what the current scene declares, and
  * return the discrepancies. The engine's whole contract is that these agree, so this is
- * the cheapest way to check all 101 scenes without screenshotting every one.
+ * the cheapest way to check every scene without screenshotting every one.
  */
 probe.__audit = () => {
   const scene = DECK[index]!;

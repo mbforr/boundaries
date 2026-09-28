@@ -11,7 +11,7 @@ re-derives a boundary or recomputes the at-pin count.
 
 | page | what it is |
 |---|---|
-| [`/`](app/index.html) | **the deck** — 109 scenes, stepped with the arrow keys |
+| [`/`](app/index.html) | **the deck** — 114 scenes, stepped with the arrow keys |
 | [`/flash.html`](app/flash.html) | one place, every boundary over it, strobing past |
 | [`/draw.html`](app/draw.html) | one layer, drawn by a moving pen |
 | [`/matte.html`](app/matte.html) | any of the above, grey land and white names |
@@ -21,7 +21,8 @@ The last two are composite plates: the same pieces with the map restyled and eve
 taken off, for footage that gets keyed or laid under something else.
 
 **[GUIDE.md](GUIDE.md) has the URL for each one, every option it takes, and how to record
-it.** [NOTES.md](NOTES.md) has why it is built this way.
+it.** [SCENES.md](SCENES.md) lists all 114 scenes with a deep link and the paragraph of the
+script each came from. [NOTES.md](NOTES.md) has why it is built this way.
 
 ## Run it
 
@@ -45,7 +46,8 @@ see [GUIDE.md](GUIDE.md#regenerating-the-data).
 | `app/src/engine/` | scene state, steps, layers, the AZ-264 drive |
 | `app/public/data/` | 94 MB of exported GeoJSON, committed |
 | `scripts/` | export, scene props, smoke tests |
-| `docs/beats.yaml` | the crosswalk from the script's 93 counter marks to layers |
+| `docs/script_v3.md` | the narration, with 93 counter marks |
+| `docs/beats.yaml` | the crosswalk from those marks to layers |
 | `qa/` | provenance and export receipts |
 
 ## Attribution owed in the video description

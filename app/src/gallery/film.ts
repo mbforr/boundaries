@@ -10,7 +10,7 @@ import { setFilmStyle, filmStyleFor } from '../filmstyle';
  *
  *   /matte.html?show=flash   grey land, white names, the boundary strobe
  *   /key.html?show=draw      green non-land, the drawing pen
- *   /key.html?show=deck      green non-land, the 109-scene deck, stepped by hand
+ *   /key.html?show=deck      green non-land, the whole deck, stepped by hand
  *
  * `?show=` picks the piece (flash by default) and every option that piece already
  * understands still applies — ?at=, ?ms=, ?layer=, ?order=, ?scene=, ?record=1 and the

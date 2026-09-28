@@ -10,7 +10,7 @@ import { applyFilmStyle } from '../filmstyle';
 /**
  * Shared boot for the two gallery pages — /flash.html and /draw.html.
  *
- * These are contact sheets for the boundary stack, not part of the 109-scene deck: one
+ * These are contact sheets for the boundary stack, not part of the deck: one
  * shows every layer in the registry in quick succession, the other draws a single layer's
  * outlines with a moving pen. They deliberately reuse the deck's map style, pen palette,
  * record mode and type, so what you see here is what the deck would show.

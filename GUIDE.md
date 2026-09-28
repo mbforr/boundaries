@@ -6,6 +6,7 @@ Replace `localhost:5173` with your deployment host and every URL below works unc
 
 - [Deploying](#deploying)
 - [The deck](#the-deck)
+- [Every scene, with its script](SCENES.md)
 - [The strobe](#the-strobe----flashhtml)
 - [The drawing pen](#the-drawing-pen----drawhtml)
 - [The composite plates](#the-composite-plates----mattehtml-and-keyhtml)
@@ -85,7 +86,7 @@ did not ship — confirm `app/public/data/` is in the repo, not ignored.
 
 **<http://localhost:5173/>**
 
-109 scenes: a two-part cold open, the 93 counter beats, and 14 choreographed sequences
+114 scenes: a two-part cold open, the 93 counter beats, and 14 choreographed sequences
 spliced in at their script positions. Step it by hand while recording.
 
 | key | |
@@ -104,6 +105,11 @@ Pressing → during a choreography lands the current scene immediately; the next
 advances. A half-finished animation never survives a keypress.
 
 **Deep-link a scene:** `?scene=beat-42`, `?scene=arizona-clocks`, `?scene=ys-sliver`.
+
+**[SCENES.md](SCENES.md) is the full list** — all 114, in order, each with its counter
+number, title, deep link, pen, layers, on-screen caption and the paragraph of
+`docs/script_v3.md` its counter mark sits in. The table below is just the sequences worth
+jumping to directly.
 
 **The cue track.** Every counter tick and scene change is stamped with milliseconds since
 the last `R`, along with the scene, beat, pen and caption, so the audio pass can be cut
@@ -292,6 +298,21 @@ because it classifies the road against it. Run `export_web.py` first; the script
 if you don't.
 
 Commit whatever changes, since the build machine cannot regenerate any of it.
+
+### Regenerating SCENES.md
+
+`SCENES.md` is generated from the deck itself, so it needs the dev server up:
+
+```sh
+cd app && npm run dev &
+python3 scripts/scene_index.py
+```
+
+It reads `window.__deck()` from the running app rather than re-deriving the deck order in
+Python. The splice of the 14 choreographed sequences into the 93 beats lives in
+`scenes.ts`, and a second implementation of it is a second thing to be wrong — an index
+that quietly disagrees with the deck is worse than no index. It also reports any beat whose
+counter mark it could not find in the script.
 
 ---
 

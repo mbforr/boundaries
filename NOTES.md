@@ -89,7 +89,7 @@ open 'http://localhost:5173/key.html?show=draw&layer=census_county&ms=20000'
 open 'http://localhost:5173/matte.html?show=deck&scene=beat-08'   # step it with the arrows
 ```
 
-`?show=deck` is the whole 109-scene walkthrough, stepped by hand exactly as at
+`?show=deck` is the whole walkthrough, stepped by hand exactly as at
 `/index.html`. What comes off is the counter, the caption, the pen swatch, the cards, the
 index readout and the overlays — the map and its boundaries, nothing else.
 
@@ -255,7 +255,7 @@ transition.
 
 ## The deck
 
-109 scenes: a two-part cold open, the 93 counter beats, and 14 choreographed scenes spliced
+114 scenes: a two-part cold open, the 93 counter beats, and 14 choreographed scenes spliced
 in at their script positions.
 
 | sequence | after beat | what it does |
