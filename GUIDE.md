@@ -45,45 +45,41 @@ whose free bandwidth allowance one full run of `/flash.html` would eat into.
 
 ### 2. Import into Vercel
 
-The app lives in `app/`, not at the repo root, and that is the one thing to get right.
-
-**Set Root Directory to `app`.** Vercel → Settings → Build and Deployment → Root Directory.
-That is the only manual setting; everything else comes from `vercel.json`:
+The app lives in `app/`, not at the repo root. `vercel.json` handles that, and it is
+written for Vercel's **default** Root Directory — the repo root — so a fresh import needs
+no dashboard configuration at all:
 
 | setting | value |
 |---|---|
-| Root Directory | `app` |
-| Framework preset | Vite |
-| Install command | `npm ci` |
-| Build command | `npm run build` |
-| Output directory | `dist` |
+| Root Directory | *(leave empty — the repo root)* |
+| Framework preset | Other |
+| Install command | `cd app && npm ci` |
+| Build command | `cd app && npm run build` |
+| Output directory | `app/dist` |
 
-Every path there is relative to `app/`, because that is the directory Vercel runs in once
-the Root Directory is set. The same file sits at the repo root **and** in `app/` — they are
-byte-identical, and both exist because Vercel resolves `vercel.json` from the repository
-root while executing commands in the Root Directory, so whichever it picks up says the
-same thing.
+**Leave Root Directory empty.** If it is set to `app`, every path above is wrong by one
+level: the commands try to `cd app` from inside `app/`, and the output directory resolves
+to `app/app/dist`. There is no config that is right for both, because `outputDirectory`
+can only name one of `dist` or `app/dist` — so the repo commits to the default, which is
+the one that needs no manual step.
 
-**Leave the dashboard's Build & Output overrides empty.** If Install Command, Build Command
-or Output Directory were ever typed in by hand, they can disagree with `vercel.json` and
-with the Root Directory — an Output Directory of `app/dist` combined with a Root Directory
-of `app` resolves to `app/app/dist`, which does not exist, and the deployment serves
-nothing.
+**Leave the dashboard's Build & Output overrides empty too**, so `vercel.json` is the only
+thing deciding.
 
-> **Failure signatures, all three of which this repo hit:**
+> **Three failure signatures, all of them the same underlying mistake — a path that assumes
+> a different working directory than Vercel uses. This repo hit all three:**
 >
-> - `sh: line 1: cd: app: No such file or directory` — a command is changing into `app/`
->   when it is already there. Root Directory is `app`; the command assumes the repo root.
+> - `sh: line 1: cd: app: No such file or directory` — the command is changing into `app/`
+>   from inside `app/`. Root Directory is set to `app`; empty it.
 > - A wall of npm usage text ending in `Run "npm help ci" for more info` — npm's `EUSAGE`.
 >   `npm ci` found no `package-lock.json` where it looked. Same cause, other direction.
-> - **`404 NOT_FOUND` on every path, with a build that reports success** — the build ran but
->   Vercel is serving a directory with no `index.html` in it. The Output Directory does not
->   point at the `dist/` the build actually produced. Open the deployment and use the
->   **Source** tab to see the files it published: if `index.html` is not at the top of that
->   listing, this is the problem.
+> - **`404 NOT_FOUND` on every path.** Vercel is serving a directory with no `index.html`
+>   in it. Check what the deployment actually published — if a request for
+>   `/app/src/main.ts` returns **200**, the repository is being served raw and no build ran
+>   at all, which means the build command never took effect.
 >
-> All three are the same underlying mistake — a path that assumes a different working
-> directory than the one Vercel uses.
+> `curl -o /dev/null -w '%{http_code}' https://your-site/app/src/main.ts` is the quickest
+> test: 404 is healthy, 200 means you are looking at an unbuilt deployment.
 
 ### 3. Set the Mapbox token
 
