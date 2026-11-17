@@ -1,0 +1,1643 @@
+# The explorer's catalog: one row per boundary type counted in the video.
+#
+# Rows, labels, chapter pens and scope come from docs/beats.yaml and are checked
+# against it on every build. Everything else here is curated: who drew the line (pen),
+# sources, licenses, and why a type has no geometry. scripts/build_catalog.py validates
+# this file and writes app/src/catalog.generated.ts and app/public/data/catalog.csv.
+#
+#   pen          who drew the line (the explorer groups by this)
+#   chapter_pen  the video chapter the type is counted in (from beats.yaml)
+#   status       mapped | missing. A missing type never gets geometry.
+#   filter       for two types that share one file: which features belong to this type
+#   at_esb       does the type's polygon contain the Empire State Building. Mapped rows
+#                are recomputed from the exported GeoJSON on every build; missing rows
+#                come from the data repo's qa/esb_expected.csv, or are left out.
+#   verified     the URL was fetched and returned 200 (--check-urls). false means it
+#                could not be confirmed, not that it is wrong.
+
+types:
+- n: 1
+  label: The United States
+  pen: congress
+  chapter_pen: congress
+  pen_note: The file is derived from the states, which is why the registry says statisticians, but the
+    national border is set by treaty and statute.
+  status: mapped
+  scope: national
+  layer: census_nation
+  authority: US Census Bureau
+  dataset: Dissolved from the TIGER/Line 2025 state polygons
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/STATE/tl_2025_us_state.zip
+  derivation: Dissolved from the TIGER/Line 2025 state polygons.
+  input_url: https://www2.census.gov/geo/tiger/TIGER2025/STATE/tl_2025_us_state.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-04'
+  verified: true
+- n: 2
+  label: The 50 states
+  pen: congress
+  chapter_pen: congress
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: census_state
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: States'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/STATE/tl_2025_us_state.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 3
+  label: Counties
+  pen: politicians
+  chapter_pen: congress
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: census_county
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: Counties'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/COUNTY/tl_2025_us_county.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 4
+  label: County subdivision
+  pen: politicians
+  chapter_pen: congress
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: census_cousub
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: County subdivisions (New York)'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/COUSUB/tl_2025_36_cousub.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 5
+  label: City limits
+  pen: politicians
+  chapter_pen: congress
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: census_place
+  filter:
+    LSAD:
+    - '25'
+    - '47'
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: Places (New York)'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/PLACE/tl_2025_36_place.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 6
+  label: Census tract
+  pen: statisticians
+  chapter_pen: statisticians
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: census_tract
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: Census tracts (New York)'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/TRACT/tl_2025_36_tract.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 7
+  label: Block group
+  pen: statisticians
+  chapter_pen: statisticians
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: census_bg
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: Block groups (New York)'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/BG/tl_2025_36_bg.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 8
+  label: Census block
+  pen: statisticians
+  chapter_pen: statisticians
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: census_block
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: 2020 census blocks (New York)'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/TABBLOCK20/tl_2025_36_tabblock20.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 9
+  label: Census place
+  pen: statisticians
+  chapter_pen: statisticians
+  pen_note: 'Shares the census_place file with #5, but this type includes the census designated places,
+    which only the Census Bureau draws.'
+  status: mapped
+  scope: nyc
+  layer: census_place
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: Places (New York)'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/PLACE/tl_2025_36_place.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 10
+  label: Urban area
+  pen: statisticians
+  chapter_pen: statisticians
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: census_urban_area
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: 2020 urban areas'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/UAC20/tl_2025_us_uac20.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 11
+  label: Public use microdata area
+  pen: statisticians
+  chapter_pen: statisticians
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: census_puma
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: 2020 PUMAs (New York)'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/PUMA20/tl_2025_36_puma20.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 12
+  label: Census region
+  pen: statisticians
+  chapter_pen: statisticians
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: census_region
+  authority: US Census Bureau
+  dataset: TIGER/Line 2025 states grouped into the four Census regions
+  source_url: https://www2.census.gov/geo/pdfs/maps-data/maps/reference/us_regdiv.pdf
+  derivation: TIGER/Line 2025 states grouped into the four Census regions.
+  input_url: https://www2.census.gov/geo/tiger/TIGER2025/STATE/tl_2025_us_state.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-04'
+  verified: true
+- n: 13
+  label: Census division
+  pen: statisticians
+  chapter_pen: statisticians
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: census_division
+  authority: US Census Bureau
+  dataset: TIGER/Line 2025 states grouped into the nine Census divisions
+  source_url: https://www2.census.gov/geo/pdfs/maps-data/maps/reference/us_regdiv.pdf
+  derivation: TIGER/Line 2025 states grouped into the nine Census divisions.
+  input_url: https://www2.census.gov/geo/tiger/TIGER2025/STATE/tl_2025_us_state.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-04'
+  verified: true
+- n: 14
+  label: Metropolitan statistical area
+  pen: statisticians
+  chapter_pen: statisticians
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: census_cbsa
+  filter:
+    LSAD:
+    - M1
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: Core based statistical areas'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/CBSA/tl_2025_us_cbsa.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 15
+  label: Metropolitan division
+  pen: statisticians
+  chapter_pen: statisticians
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: census_metdiv
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: Metropolitan divisions'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/METDIV/tl_2025_us_metdiv.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 16
+  label: Combined statistical area
+  pen: statisticians
+  chapter_pen: statisticians
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: census_csa
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: Combined statistical areas'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/CSA/tl_2025_us_csa.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 17
+  label: Micropolitan statistical area
+  pen: statisticians
+  chapter_pen: statisticians
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: census_cbsa
+  filter:
+    LSAD:
+    - M2
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: Core based statistical areas'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/CBSA/tl_2025_us_cbsa.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 18
+  label: Congressional district
+  pen: politicians
+  chapter_pen: politicians
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: census_cd
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: 119th Congress districts (New York)'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/CD/tl_2025_36_cd119.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 19
+  label: State senate district
+  pen: politicians
+  chapter_pen: politicians
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: census_sldu
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: State senate districts (New York)'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/SLDU/tl_2025_36_sldu.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 20
+  label: State house district
+  pen: politicians
+  chapter_pen: politicians
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: census_sldl
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: State assembly districts (New York)'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/SLDL/tl_2025_36_sldl.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 21
+  label: Voting precinct
+  pen: politicians
+  chapter_pen: politicians
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: nyc_election_district
+  authority: NYC Department of City Planning
+  dataset: 'NYC Open Data: Election Districts'
+  source_url: https://data.cityofnewyork.us/api/geospatial/wwxk-38u4?method=export&format=GeoJSON
+  license: NYC Open Data terms of use
+  vintage: 2026-05-26 (Socrata rowsUpdatedAt)
+  retrieved: '2026-08-03'
+  verified: true
+- n: 22
+  label: City council ward
+  pen: politicians
+  chapter_pen: politicians
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: nyc_council_district
+  authority: NYC Department of City Planning
+  dataset: 'NYC Open Data: City Council Districts'
+  source_url: https://data.cityofnewyork.us/api/geospatial/872g-cjhh?method=export&format=GeoJSON
+  license: NYC Open Data terms of use
+  vintage: 2026-05-26 (Socrata rowsUpdatedAt)
+  retrieved: '2026-08-03'
+  verified: true
+- n: 23
+  label: Community district
+  pen: politicians
+  chapter_pen: politicians
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: nyc_community_district
+  authority: NYC Department of City Planning
+  dataset: 'NYC Open Data: Community Districts'
+  source_url: https://data.cityofnewyork.us/api/geospatial/5crt-au7u?method=export&format=GeoJSON
+  license: NYC Open Data terms of use
+  vintage: 2026-05-26 (Socrata rowsUpdatedAt)
+  retrieved: '2026-08-03'
+  verified: true
+- n: 24
+  label: County commissioner district
+  pen: politicians
+  chapter_pen: politicians
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  missing_reason: no_national_file
+  missing_note: Nobody publishes a national file. These lines are drawn place by place, and each one is
+    kept separately.
+  keeper: Each county
+- n: 25
+  label: Judicial election district
+  pen: politicians
+  chapter_pen: politicians
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  missing_reason: no_national_file
+  missing_note: Nobody publishes a national file. Each state draws its own.
+  keeper: Each state legislature
+- n: 26
+  label: School district
+  pen: politicians
+  chapter_pen: politicians
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: census_unsd
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: Unified school districts (New York)'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/UNSD/tl_2025_36_unsd.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 27
+  label: School attendance zone
+  pen: politicians
+  chapter_pen: politicians
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: nces_sabs
+  registry_pen: politicians
+  missing_reason: buildable
+  missing_note: The Department of Education collected attendance zones once, for 2015-16. That file is
+    public but out of date, and it isn't in the stack.
+  keeper: Each school district
+  candidate_source:
+    name: School Attendance Boundary Survey (SABS) 2015-2016
+    maintainer: NCES EDGE (US Dept of Education)
+    url: https://nces.ed.gov/programs/edge/data/SABS_1516.zip
+    verified: true
+    license: Public domain (US federal)
+    note: Latest SABS vintage is 2015-16 (experimental survey, not continued); landing page is https://nces.ed.gov/programs/edge/SABS.
+- n: 28
+  label: Elementary school district
+  pen: politicians
+  chapter_pen: politicians
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  missing_reason: buildable
+  missing_note: The Census Bureau publishes them, one file per state. I haven't added them.
+  keeper: Each state, under its school law
+  candidate_source:
+    name: TIGER/Line 2025 Elementary School Districts (ELSD)
+    maintainer: US Census Bureau
+    url: https://www2.census.gov/geo/tiger/TIGER2025/ELSD/
+    verified: true
+    license: Public domain (US federal)
+    note: State files only (tl_2025_SS_elsd.zip for the 25 states that have elementary districts); TIGER2026/ELSD
+      now also exists.
+- n: 29
+  label: Secondary school district
+  pen: politicians
+  chapter_pen: politicians
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  missing_reason: buildable
+  missing_note: The Census Bureau publishes them, one file per state. I haven't added them.
+  keeper: Each state, under its school law
+  candidate_source:
+    name: TIGER/Line 2025 Secondary School Districts (SCSD)
+    maintainer: US Census Bureau
+    url: https://www2.census.gov/geo/tiger/TIGER2025/SCSD/
+    verified: true
+    license: Public domain (US federal)
+    note: State files only (19 states have secondary districts); TIGER2026/SCSD now also exists.
+- n: 30
+  label: Community school district
+  pen: politicians
+  chapter_pen: politicians
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: nyc_school_district
+  authority: NYC Department of City Planning
+  dataset: 'NYC Open Data: School Districts'
+  source_url: https://data.cityofnewyork.us/api/geospatial/8ugf-3d8u?method=export&format=GeoJSON
+  license: NYC Open Data terms of use
+  vintage: 2026-05-26 (Socrata rowsUpdatedAt)
+  retrieved: '2026-08-03'
+  verified: true
+- n: 31
+  label: State trial district
+  pen: courts
+  chapter_pen: courts
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: courts_ny_judicial_district
+  authority: New York State Unified Court System
+  dataset: TIGER/Line 2025 counties grouped into New York's judicial districts
+  source_url: https://www.nycourts.gov/es/node/194111
+  derivation: TIGER/Line 2025 counties grouped into New York's judicial districts, using scripts/crosswalks/ny_county_judicial_district.csv
+    in the data repo.
+  input_url: https://www2.census.gov/geo/tiger/TIGER2025/COUNTY/tl_2025_us_county.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-04'
+  verified: false
+- n: 32
+  label: State appellate district
+  pen: courts
+  chapter_pen: courts
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: courts_ny_appellate_dept
+  authority: New York State Appellate Division
+  dataset: Judicial districts grouped into Appellate Division departments
+  source_url: https://www.nycourts.gov/LegacyPDFS/25_AD-Map-8.5x11.pdf
+  derivation: Judicial districts grouped into Appellate Division departments, using scripts/crosswalks/ny_county_judicial_district.csv
+    in the data repo.
+  input_url: https://www2.census.gov/geo/tiger/TIGER2025/COUNTY/tl_2025_us_county.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-04'
+  verified: false
+- n: 33
+  label: Federal district court
+  pen: courts
+  chapter_pen: courts
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: courts_fed_district
+  authority: United States Congress (28 USC 81-131)
+  dataset: TIGER/Line 2025 counties grouped by 28 USC 81-131
+  source_url: https://www.law.cornell.edu/uscode/text/28/part-I/chapter-5
+  derivation: TIGER/Line 2025 counties grouped by 28 USC 81-131, using the crosswalk scripts/crosswalks/county_fed_district.csv
+    in the data repo.
+  input_url: https://www2.census.gov/geo/tiger/TIGER2025/COUNTY/tl_2025_us_county.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-04'
+  verified: true
+- n: 34
+  label: Federal circuit
+  pen: courts
+  chapter_pen: courts
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: courts_fed_circuit
+  authority: United States Congress (28 USC 41)
+  dataset: Federal districts grouped into circuits by 28 USC 41
+  source_url: https://www.law.cornell.edu/uscode/text/28/41
+  derivation: Federal districts grouped into circuits by 28 USC 41, using scripts/crosswalks/county_fed_district.csv
+    in the data repo.
+  input_url: https://www2.census.gov/geo/tiger/TIGER2025/COUNTY/tl_2025_us_county.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-04'
+  verified: true
+- n: 35
+  label: Tribal boundary
+  pen: courts
+  chapter_pen: courts
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: census_aiannh
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: American Indian, Alaska Native and Native Hawaiian areas'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/AIANNH/tl_2025_us_aiannh.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-09-08'
+  verified: true
+- n: 36
+  label: Alaska Native regional corporation
+  pen: congress
+  chapter_pen: courts
+  pen_note: 'Least certain: Congress drew these in ANCSA 1971, but they could sit with the courts.'
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: census_anrc
+  registry_pen: statisticians
+  missing_reason: buildable
+  missing_note: The Census Bureau publishes them in one file for Alaska. I haven't added it.
+  keeper: Set by the Alaska Native Claims Settlement Act of 1971
+  candidate_source:
+    name: TIGER/Line 2025 Alaska Native Regional Corporations
+    maintainer: US Census Bureau
+    url: https://www2.census.gov/geo/tiger/TIGER2025/ANRC/tl_2025_02_anrc.zip
+    verified: true
+    license: Public domain (US federal)
+    note: Direct zip (0.7 MB); a 2026 vintage tl_2026_02_anrc.zip is now also published.
+- n: 37
+  label: National park
+  pen: congress
+  chapter_pen: courts
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: nps_boundary
+  authority: National Park Service
+  dataset: NPS Land Resources Division unit boundaries
+  source_url: https://services1.arcgis.com/fBc8EJBxQRMcHlei/arcgis/rest/services/NPS_Land_Resources_Division_Boundary_and_Tract_Data_Service/FeatureServer/2
+  license: Public domain (US government work)
+  vintage: 2026-06-18 (latest DATE_EDIT)
+  retrieved: '2026-08-03'
+  verified: true
+- n: 38
+  label: National forest
+  pen: congress
+  chapter_pen: courts
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: padus_fed_land
+  registry_pen: congress
+  missing_reason: buildable
+  missing_note: The Forest Service publishes a national file. I haven't added it.
+  keeper: US Forest Service
+  candidate_source:
+    name: Administrative Forest Boundaries (BdyAdm_LSRS_AdministrativeForest)
+    maintainer: USDA Forest Service (EDW / FSGeodata Clearinghouse)
+    url: https://data.fs.usda.gov/geodata/edw/edw_resources/shp/BdyAdm_LSRS_AdministrativeForest.zip
+    verified: true
+    license: Public domain (US federal)
+    note: Listed on https://data.fs.usda.gov/geodata/edw/datasets.php and refreshed often; the older S_USA.AdministrativeForest.zip
+      name still returns 200 but is unlisted and dated July 2025.
+- n: 39
+  label: BLM rangeland
+  pen: congress
+  chapter_pen: courts
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: padus_fed_land
+  registry_pen: congress
+  missing_reason: buildable
+  missing_note: The Bureau of Land Management publishes a national file. I haven't added it.
+  keeper: Bureau of Land Management
+  candidate_source:
+    name: BLM National SMA Surface Management Agency Area Polygons
+    maintainer: Bureau of Land Management
+    url: https://www.arcgis.com/sharing/rest/content/items/6bf2e737c59d4111be92420ee5ab0b46/data
+    verified: true
+    license: Public domain (US federal); BLM asks to be cited
+    note: National file geodatabase SMA_WM.gdb.zip (about 1.1 GB) served from BLM's ArcGIS item; Hub landing
+      page is https://gbp-blm-egis.hub.arcgis.com/documents/6bf2e737c59d4111be92420ee5ab0b46.
+- n: 40
+  label: Military base
+  pen: congress
+  chapter_pen: courts
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  missing_reason: buildable
+  missing_note: The Defense Department publishes a national file. I haven't added it.
+  keeper: Department of Defense
+  candidate_source:
+    name: Military Installations, Ranges, and Training Areas (MIRTA)
+    maintainer: DoD OASD(EI&E) DISDI Program
+    url: https://www.acq.osd.mil/eie/imr/rpid/disdi/Downloads/installations_ranges.zip
+    verified: true
+    license: Public domain (US federal)
+    note: 2024 vintage zip (3.7 MB, last modified Sep 2025) linked from https://www.acq.osd.mil/eie/imr/rpid/disdi/index.html.
+- n: 41
+  label: Grid interconnection
+  pen: markets
+  chapter_pen: markets
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: energy_interconnection
+  registry_pen: markets
+  missing_reason: derivable
+  missing_note: 'There are three: Eastern, Western and Texas. They could be drawn from the balancing authorities
+    already on this map, but I haven''t done it.'
+  keeper: The grid's owners, overseen by NERC and FERC
+  candidate_source:
+    name: U.S. electric system is made up of interconnections and balancing authorities (Today in Energy)
+    maintainer: US Energy Information Administration
+    url: https://www.eia.gov/todayinenergy/detail.php?id=27152
+    verified: true
+    license: Public domain (US federal)
+    note: July 20, 2016 article describing the Eastern, Western and ERCOT interconnections.
+- n: 42
+  label: Regional transmission organization
+  pen: markets
+  chapter_pen: markets
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: energy_rto_iso
+  authority: EIA / HIFLD, preserved by ICPSR DataLumos
+  dataset: HIFLD Independent System Operators (2020), archived on ICPSR DataLumos
+  source_url: https://www.datalumos.org/datalumos/project/239294/version/V1/view?path=/datalumos/239294/fcr:versions/V1/independent-systems-operators-geojson.zip&type=file
+  license: Public domain (US government work), archived by ICPSR DataLumos
+  vintage: 2020 HIFLD
+  retrieved: '2026-08-04'
+  verified: false
+- n: 43
+  label: Balancing authority
+  pen: markets
+  chapter_pen: markets
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: energy_balancing_authority
+  authority: EIA / HIFLD, preserved by ICPSR DataLumos
+  dataset: HIFLD Control Areas (2021), archived on ICPSR DataLumos
+  source_url: https://www.datalumos.org/datalumos/project/239072/version/V1/view?path=/datalumos/239072/fcr:versions/V1/control-areas-geojson.zip&type=file
+  license: Public domain (US government work), archived by ICPSR DataLumos
+  vintage: 2021 HIFLD
+  retrieved: '2026-08-04'
+  verified: false
+- n: 44
+  label: Pricing zone
+  pen: markets
+  chapter_pen: markets
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: energy_nyiso_zone
+  registry_pen: markets
+  missing_reason: no_national_file
+  missing_note: Every grid operator draws its own pricing zones, and nobody joins them into one file.
+    NYISO, which runs New York's grid, publishes its zones only as a map image.
+  keeper: Each grid operator, such as NYISO or PJM
+  candidate_source:
+    name: NYISO New York Control Area load zones (reference)
+    maintainer: New York ISO
+    url: https://www.nyiso.com/documents/20142/3037451/1-Power-Systems-Fundamentals.pdf/eb28fc43-0ed2-f4f4-6ca5-503a118082a3
+    verified: true
+    license: Copyright NYISO, all rights reserved (reference only)
+    note: No national pricing-zone file exists; each ISO/RTO publishes its own zones and NYISO offers
+      only map images, such as the zone A-K map in this training deck, with no shapefile.
+  at_esb: true
+  esb_value: Zone J
+  esb_evidence: 'expected, not tested: qa/esb_expected.csv (high)'
+- n: 45
+  label: Reliability region
+  pen: markets
+  chapter_pen: markets
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: energy_nerc_region
+  registry_pen: markets
+  missing_reason: buildable
+  missing_note: The national file came from HIFLD, a federal program that shut down in 2025. Archived
+    copies exist, but I haven't added one.
+  keeper: NERC and its regional entities, approved by FERC
+  candidate_source:
+    name: NERC Regions (HIFLD Open archive)
+    maintainer: DHS HIFLD (retired); archived by ICPSR DataLumos
+    url: https://www.datalumos.org/datalumos/project/239749
+    verified: false
+    license: Public domain (US federal source data)
+    note: DataLumos returns a Cloudflare challenge (403) to scripts; the EIA Atlas slug atlas.eia.gov/datasets/eia::nerc-regions-1
+      returns a 200 page shell, but the Hub API has no such dataset and EIA's NERC_Regions_EIA service
+      requires a token.
+  at_esb: true
+  esb_value: NPCC
+  esb_evidence: 'expected, not tested: qa/esb_expected.csv (high)'
+- n: 46
+  label: Electric utility territory
+  pen: markets
+  chapter_pen: markets
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: energy_utility_territory
+  registry_pen: markets
+  missing_reason: buildable
+  missing_note: The national file came from HIFLD, a federal program that shut down in 2025. Archived
+    copies exist, but I haven't added one.
+  keeper: State utility commissions
+  candidate_source:
+    name: Electric Retail Service Territories (HIFLD Open archive)
+    maintainer: DHS HIFLD / ORNL (retired); archived by ICPSR DataLumos
+    url: https://www.datalumos.org/datalumos/project/239091
+    verified: false
+    license: Public domain (US federal source data)
+    note: No EIA-hosted polygon layer was found (EIA's public ArcGIS org has none); the archive is behind
+      a Cloudflare challenge, and https://portal.datarescueproject.org/datasets/hifld-open-electric-retail-service-territories/
+      (200) confirms it.
+  at_esb: true
+  esb_value: Consolidated Edison
+  esb_evidence: 'expected, not tested: qa/esb_expected.csv (high)'
+- n: 47
+  label: Gas utility territory
+  pen: markets
+  chapter_pen: markets
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  missing_reason: buildable
+  missing_note: The national file came from HIFLD, a federal program that shut down in 2025. Archived
+    copies exist, but I haven't added one.
+  keeper: State utility commissions
+  candidate_source:
+    name: Natural Gas Service Territories (HIFLD Open archive)
+    maintainer: DHS HIFLD (retired); archived by ICPSR DataLumos
+    url: https://www.datalumos.org/datalumos/project/240245/version/V1/view
+    verified: false
+    license: Public domain (US federal source data)
+    note: EIA Atlas has no gas utility territory layer; DataLumos blocks scripts (403), and https://portal.datarescueproject.org/datasets/hifld-open-natural-gas-service-territories/
+      (200) points to this archive.
+- n: 48
+  label: Petroleum district (PADD)
+  pen: congress
+  chapter_pen: markets
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: fedadmin_padd
+  authority: US Energy Information Administration
+  dataset: TIGER/Line 2025 states grouped into EIA's five PADDs
+  source_url: https://www.eia.gov/petroleum/marketing/monthly/pdf/paddmap.pdf
+  derivation: TIGER/Line 2025 states grouped into EIA's five PADDs, using scripts/crosswalks/state_padd.csv
+    in the data repo.
+  input_url: https://www2.census.gov/geo/tiger/TIGER2025/STATE/tl_2025_us_state.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-04'
+  verified: true
+- n: 49
+  label: Federal Reserve district
+  pen: congress
+  chapter_pen: markets
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: fedadmin_frb_district
+  registry_pen: congress
+  missing_reason: blocked
+  missing_note: When I built the stack, the Kansas City Fed's site blocked automated downloads. Its county
+    file downloads fine now. I just haven't added it.
+  keeper: Federal Reserve, under the Federal Reserve Act of 1913
+  candidate_source:
+    name: Federal Reserve District County Shapefiles (TB 19-01)
+    maintainer: Federal Reserve Bank of Kansas City
+    url: https://www.kansascityfed.org/documents/7589/tousey_frbkc-tb19-01_data_20190606.zip
+    verified: true
+    license: No license stated (FRB Kansas City research data; cite source)
+    note: 'June 2019 vintage zip (201 MB: Fed Counties.zip, FedCounties.csv, ReadMe.pdf) from https://www.kansascityfed.org/research/technical-briefings-sub/federal-reserve-district-county-shapefiles/;
+      plain curl gets 200, but a request with a spoofed browser user-agent hung until timeout.'
+  at_esb: true
+  esb_value: Second District (NY Fed)
+  esb_evidence: 'expected, not tested: qa/esb_expected.csv (high)'
+- n: 50
+  label: Federal Home Loan Bank district
+  pen: congress
+  chapter_pen: markets
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: fedadmin_fhlb_district
+  registry_pen: congress
+  missing_reason: buildable
+  missing_note: The law assigns each state to a district. They could be drawn from the states already
+    on this map, but I haven't done it.
+  keeper: Federal Housing Finance Agency, under the Federal Home Loan Bank Act of 1932
+  candidate_source:
+    name: 12 USC 1423 - Federal Home Loan Bank districts
+    maintainer: 'Cornell LII (statute: US Congress; districts set by FHFA)'
+    url: https://www.law.cornell.edu/uscode/text/12/1423
+    verified: true
+    license: Public domain (statute text)
+    note: The statute allows FHFA to readjust districts, so use FHFA's 11-district map https://www.fhfa.gov/sites/default/files/2023-07/FHLB_map-with-territories.pdf
+      (200) or https://www.fhfa.gov/supervision/federal-home-loan-bank-system/districts (200) for the
+      current state assignment.
+  at_esb: true
+  esb_value: FHLBank of New York
+  esb_evidence: 'expected, not tested: qa/esb_expected.csv (high)'
+- n: 51
+  label: FEMA region
+  pen: congress
+  chapter_pen: markets
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: fedadmin_fema_region
+  authority: Federal Emergency Management Agency
+  dataset: TIGER/Line 2025 states grouped into FEMA's ten regions
+  source_url: https://www.fema.gov/about/regions
+  derivation: TIGER/Line 2025 states grouped into FEMA's ten regions, using scripts/crosswalks/state_fema_region.csv
+    in the data repo.
+  input_url: https://www2.census.gov/geo/tiger/TIGER2025/STATE/tl_2025_us_state.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-04'
+  verified: true
+- n: 52
+  label: EPA region
+  pen: congress
+  chapter_pen: markets
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: fedadmin_epa_region
+  authority: US Environmental Protection Agency
+  dataset: TIGER/Line 2025 states grouped into EPA's ten regions
+  source_url: https://www.epa.gov/aboutepa/regional-and-geographic-offices
+  derivation: TIGER/Line 2025 states grouped into EPA's ten regions, using scripts/crosswalks/state_epa_region.csv
+    in the data repo.
+  input_url: https://www2.census.gov/geo/tiger/TIGER2025/STATE/tl_2025_us_state.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-04'
+  verified: true
+- n: 53
+  label: Standard federal region
+  pen: congress
+  chapter_pen: markets
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: fedadmin_std_federal_region
+  registry_pen: congress
+  missing_reason: buildable
+  missing_note: OMB set ten standard federal regions in 1974 and dropped them in 1995. A federal notice
+    confirms the ten regions, but I haven't found an official list of which states go in each.
+  keeper: Office of Management and Budget
+  candidate_source:
+    name: Notice of proposed rescission of OMB Circular A-105 'Standard Federal Regions' (60 FR 15171,
+      1995)
+    maintainer: OMB via GovInfo (Federal Register)
+    url: https://www.govinfo.gov/content/pkg/FR-1995-03-22/pdf/95-6758.pdf
+    verified: true
+    license: Public domain (US federal)
+    note: Confirms A-105 set ten standard federal regions, but has no state-to-region table and the circular
+      was rescinded in 1995; the original 1974 circular text was not found online.
+- n: 54
+  label: CBP field office territory
+  pen: congress
+  chapter_pen: markets
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  missing_reason: no_national_file
+  missing_note: CBP says it has 19 field offices, but it doesn't publish their territories as a list or
+    a map.
+  keeper: US Customs and Border Protection
+  candidate_source:
+    name: CBP Office of Field Operations
+    maintainer: US Customs and Border Protection
+    url: https://www.cbp.gov/border-security/ports-entry/field-operations
+    verified: true
+    license: Public domain (US federal)
+    note: The page says OFO has 19 field offices but neither lists them nor maps their territories, and
+      no official field-office list or boundary file was found (cbp.gov/contact/field-offices is 404).
+- n: 55
+  label: Opportunity zone
+  pen: congress
+  chapter_pen: markets
+  pen_note: 'Least certain: Congress created them in the 2017 tax law, governors nominated the tracts
+    and Treasury certified them.'
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: hud_opportunity_zone
+  registry_pen: congress
+  missing_reason: buildable
+  missing_note: Treasury posted the new round of zones on Nov 5, 2026, as a list of census tracts. They
+    could be drawn from tracts, but I haven't done it.
+  keeper: US Treasury, from tracts the governors nominated
+  candidate_source:
+    name: Designated Qualified Opportunity Zones (OZ 2.0) list
+    maintainer: CDFI Fund / US Treasury
+    url: https://www.cdfifund.gov/system/files/2026-11/final_oz2_designations.xlsx
+    verified: true
+    license: Public domain (US federal)
+    note: New designations posted Nov 5, 2026 and effective Jan 1, 2027; the only shapefile on https://www.cdfifund.gov/opportunity-zones
+      is the 2018-round zip (opportunity-zones=8764.-9-10-2019.zip, 200), so OZ 2.0 tracts must be joined
+      to census tracts.
+- n: 56
+  label: NWS forecast zone
+  pen: surveyors
+  chapter_pen: markets
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: nws_forecast_zone
+  authority: NOAA National Weather Service
+  dataset: NWS public forecast zones (z_16ap26)
+  source_url: https://www.weather.gov/source/gis/Shapefiles/WSOM/z_16ap26.zip
+  license: Public domain (US government work)
+  vintage: '2026-04-16'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 57
+  label: County warning area
+  pen: surveyors
+  chapter_pen: markets
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: nws_cwa
+  registry_pen: surveyors
+  missing_reason: buildable
+  missing_note: The Weather Service publishes them next to the forecast zones on this map (#56). I haven't
+    added them.
+  keeper: National Weather Service
+  candidate_source:
+    name: NWS County Warning Areas (w_16ap26)
+    maintainer: NOAA National Weather Service
+    url: https://www.weather.gov/source/gis/Shapefiles/WSOM/w_16ap26.zip
+    verified: true
+    license: Public domain (US federal)
+    note: Valid 16 April 2026, the newest file listed on https://www.weather.gov/gis/CWABounds (the prior
+      file is w_18mr25.zip).
+  at_esb: true
+  esb_value: New York NY forecast office
+  esb_evidence: 'expected, not tested: qa/esb_expected.csv (high)'
+- n: 58
+  label: Fire weather zone
+  pen: surveyors
+  chapter_pen: markets
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: nws_fire_zone
+  registry_pen: surveyors
+  missing_reason: buildable
+  missing_note: The Weather Service publishes them next to the forecast zones on this map (#56). I haven't
+    added them.
+  keeper: National Weather Service
+  candidate_source:
+    name: NWS Fire Weather Zones (fz16ap26)
+    maintainer: NOAA National Weather Service
+    url: https://www.weather.gov/source/gis/Shapefiles/WSOM/fz16ap26.zip
+    verified: true
+    license: Public domain (US federal)
+    note: Valid 16 April 2026 (3,683 records), the newest file on https://www.weather.gov/gis/FireZones;
+      note the file name has no underscore.
+- n: 59
+  label: Air route traffic control center
+  pen: congress
+  chapter_pen: markets
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: faa_artcc
+  registry_pen: markets
+  missing_reason: buildable
+  missing_note: The FAA publishes them and updates them every 56 days. I haven't added them.
+  keeper: Federal Aviation Administration
+  candidate_source:
+    name: FAA Airspace Boundary (ARTCC features)
+    maintainer: FAA Aeronautical Information Services (ADDS)
+    url: https://services6.arcgis.com/ssFJjBXIUyZDrSYZ/arcgis/rest/services/Boundary_Airspace/FeatureServer/0
+    verified: true
+    license: Public domain (US federal)
+    note: ARTCC polygons are the 43 features where TYPE_CODE='ARTCC' (layer updated 2026-10-29); ADDS
+      Hub item 67885972e4e940b2aa6d74024901c561.
+- n: 60
+  label: Airspace class
+  pen: congress
+  chapter_pen: markets
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: faa_class_airspace
+  registry_pen: markets
+  missing_reason: buildable
+  missing_note: The FAA publishes them and updates them every 56 days. I haven't added them.
+  keeper: Federal Aviation Administration
+  candidate_source:
+    name: FAA Class Airspace
+    maintainer: FAA Aeronautical Information Services (ADDS)
+    url: https://services6.arcgis.com/ssFJjBXIUyZDrSYZ/arcgis/rest/services/Class_Airspace/FeatureServer/0
+    verified: true
+    license: Public domain (US federal)
+    note: Republished on the 56-day cycle (last update 2026-10-29); ADDS Hub item c6a62360338e408cb1512366ad61559e,
+      and a separate Pending_Class_Airspace service exists.
+- n: 61
+  label: Time zone
+  pen: congress
+  chapter_pen: markets
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: fedadmin_time_zone
+  authority: timezone-boundary-builder (evansiroky); legal authority is 49 CFR 71
+  dataset: timezone-boundary-builder, release 2026c
+  source_url: https://github.com/evansiroky/timezone-boundary-builder/releases/download/2026c/timezones.shapefile.zip
+  license: ODbL-1.0 (attribution required)
+  vintage: 2026c
+  retrieved: '2026-08-03'
+  verified: true
+- n: 62
+  label: Area code
+  pen: markets
+  chapter_pen: markets
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: telecom_area_code
+  registry_pen: markets
+  missing_reason: licensed
+  missing_note: The boundaries are sold by private data vendors. I can't publish them.
+  keeper: North American Numbering Plan Administrator
+  candidate_source:
+    name: NANPA Area Code Maps
+    maintainer: North American Numbering Plan Administrator
+    url: https://www.nanpa.com/resources/area-code-maps
+    verified: true
+    license: Website terms (reference only)
+    note: NANPA publishes area-code map images and NPA reports but no GIS boundaries; the old domain nationalnanpa.com
+      no longer resolves (DNS failure).
+- n: 63
+  label: Media market (DMA)
+  pen: markets
+  chapter_pen: markets
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: media_dma
+  registry_pen: markets
+  missing_reason: licensed
+  missing_note: Nielsen owns the map and licenses it. I can't publish it.
+  keeper: Nielsen
+  candidate_source:
+    name: ZIP Code by DMA Regions
+    maintainer: Nielsen
+    url: https://www.nielsen.com/dma-regions/
+    verified: true
+    license: Proprietary (Nielsen)
+    note: Reference page only; DMA boundary files are licensed by Nielsen and not public.
+- n: 64
+  label: FCC broadcast contour
+  pen: markets
+  chapter_pen: markets
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: fcc_contours
+  registry_pen: markets
+  missing_reason: buildable
+  missing_note: The FCC publishes a calculated coverage area for every licensed station. I haven't added
+    them.
+  keeper: Federal Communications Commission
+  candidate_source:
+    name: FM Service Contour Data Points
+    maintainer: Federal Communications Commission, Media Bureau
+    url: https://www.fcc.gov/media/radio/fm-service-contour-data-points
+    verified: false
+    license: Public domain (US federal)
+    note: fcc.gov and transition.fcc.gov return 403 to curl and WebFetch, so neither the page nor the
+      FM/TV contour zips (360-point text files, refreshed daily) could be checked.
+- n: 65
+  label: ZIP code tabulation area
+  pen: statisticians
+  chapter_pen: markets
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: census_zcta
+  authority: US Census Bureau
+  dataset: 'TIGER/Line 2025: ZIP code tabulation areas'
+  source_url: https://www2.census.gov/geo/tiger/TIGER2025/ZCTA520/tl_2025_us_zcta520.zip
+  license: Public domain (US government work)
+  vintage: '2025'
+  retrieved: '2026-08-03'
+  verified: true
+- n: 66
+  label: Fire protection district
+  pen: politicians
+  chapter_pen: surveyors
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: nyc_fire_battalion
+  authority: NYC Department of City Planning
+  dataset: 'NYC Open Data: Fire Battalions'
+  source_url: https://data.cityofnewyork.us/api/geospatial/xzng-ft6f?method=export&format=GeoJSON
+  license: NYC Open Data terms of use
+  vintage: 2026-05-26 (Socrata rowsUpdatedAt)
+  retrieved: '2026-08-03'
+  verified: true
+- n: 67
+  label: Emergency medical services zone
+  pen: politicians
+  chapter_pen: surveyors
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  missing_reason: no_national_file
+  missing_note: Nobody publishes a national file. These lines are drawn place by place, and each one is
+    kept separately.
+  keeper: Counties, cities and fire districts
+- n: 68
+  label: Police precinct
+  pen: politicians
+  chapter_pen: surveyors
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: nyc_police_precinct
+  authority: NYC Department of City Planning
+  dataset: 'NYC Open Data: Police Precincts'
+  source_url: https://data.cityofnewyork.us/api/geospatial/y76i-bdw7?method=export&format=GeoJSON
+  license: NYC Open Data terms of use
+  vintage: 2026-05-26 (Socrata rowsUpdatedAt)
+  retrieved: '2026-08-03'
+  verified: true
+- n: 69
+  label: Water district
+  pen: politicians
+  chapter_pen: surveyors
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  missing_reason: no_national_file
+  missing_note: Nobody publishes a national file. These lines are drawn place by place, and each one is
+    kept separately.
+  keeper: Local water authorities
+- n: 70
+  label: Sewer district
+  pen: politicians
+  chapter_pen: surveyors
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  missing_reason: no_national_file
+  missing_note: Nobody publishes a national file. These lines are drawn place by place, and each one is
+    kept separately.
+  keeper: Local sewer authorities
+- n: 71
+  label: Sanitation district
+  pen: politicians
+  chapter_pen: surveyors
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: nyc_sanitation_district
+  authority: NYC Department of Sanitation
+  dataset: 'NYC Open Data: DSNY Districts'
+  source_url: https://data.cityofnewyork.us/api/geospatial/i6mn-amj2?method=export&format=GeoJSON
+  license: NYC Open Data terms of use
+  vintage: 2024-04-10 (Socrata rowsUpdatedAt)
+  retrieved: '2026-08-03'
+  verified: true
+- n: 72
+  label: Library district
+  pen: politicians
+  chapter_pen: surveyors
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  missing_reason: no_national_file
+  missing_note: Nobody publishes a national file. These lines are drawn place by place, and each one is
+    kept separately.
+  keeper: Local library boards
+- n: 73
+  label: Tax increment financing district
+  pen: politicians
+  chapter_pen: surveyors
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  missing_reason: no_national_file
+  missing_note: Nobody publishes a national file. These lines are drawn place by place, and each one is
+    kept separately.
+  keeper: City councils
+- n: 74
+  label: Mosquito abatement district
+  pen: politicians
+  chapter_pen: surveyors
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  missing_reason: no_national_file
+  missing_note: Nobody publishes a national file. These lines are drawn place by place, and each one is
+    kept separately.
+  keeper: Counties and local district boards
+- n: 75
+  label: Zoning district
+  pen: politicians
+  chapter_pen: surveyors
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: nyc_zoning_district
+  authority: NYC Department of City Planning
+  dataset: 'NYC GIS Zoning Features, June 2026: zoning districts'
+  source_url: https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/gis-zoning-features/nycgiszoningfeatures_202606shp.zip
+  license: NYC Open Data terms of use
+  vintage: 2026-06
+  retrieved: '2026-08-03'
+  verified: true
+- n: 76
+  label: Special purpose district
+  pen: politicians
+  chapter_pen: surveyors
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: nyc_special_purpose_district
+  authority: NYC Department of City Planning
+  dataset: 'NYC GIS Zoning Features, June 2026: special purpose districts'
+  source_url: https://s-media.nyc.gov/agencies/dcp/assets/files/zip/data-tools/bytes/gis-zoning-features/nycgiszoningfeatures_202606shp.zip
+  license: NYC Open Data terms of use
+  vintage: 2026-06
+  retrieved: '2026-08-03'
+  verified: true
+- n: 77
+  label: Business improvement district
+  pen: politicians
+  chapter_pen: surveyors
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: nyc_bid
+  authority: NYC Department of Small Business Services
+  dataset: 'NYC Open Data: Business Improvement Districts'
+  source_url: https://data.cityofnewyork.us/api/geospatial/7jdm-inj8?method=export&format=GeoJSON
+  license: NYC Open Data terms of use
+  vintage: 2024-10-08 (Socrata rowsUpdatedAt)
+  retrieved: '2026-08-03'
+  verified: true
+- n: 78
+  label: Flood zone
+  pen: surveyors
+  chapter_pen: surveyors
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: fema_flood_nfhl
+  authority: Federal Emergency Management Agency
+  dataset: National Flood Hazard Layer, flood hazard zones
+  source_url: https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28
+  license: Public domain (US government work)
+  vintage: 2026-08-03 (live NFHL query)
+  retrieved: '2026-08-03'
+  verified: true
+- n: 79
+  label: Watershed region
+  pen: surveyors
+  chapter_pen: surveyors
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: usgs_wbd_huc2
+  authority: US Geological Survey
+  dataset: Watershed Boundary Dataset, 2-digit HUCs
+  source_url: https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/WBD/National/GDB/WBD_National_GDB.zip
+  license: Public domain (US government work)
+  vintage: 2024-12-28 (WBD loaddate)
+  retrieved: '2026-08-03'
+  verified: true
+- n: 80
+  label: Watershed subregion
+  pen: surveyors
+  chapter_pen: surveyors
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: usgs_wbd_huc4
+  registry_pen: surveyors
+  missing_reason: buildable
+  missing_note: Watershed regions (#79) are on the map. Subregions come from the same USGS file, but I
+    haven't added them.
+  keeper: US Geological Survey
+  candidate_source:
+    name: Watershed Boundary Dataset national GDB (HUC4 subregions in WBDHU4)
+    maintainer: USGS National Map
+    url: https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/WBD/National/GDB/WBD_National_GDB.zip
+    verified: true
+    license: Public domain (US federal)
+    note: Direct 2.8 GB zip (last modified 2026-09-02); HUC4 is one layer inside the national geodatabase.
+- n: 81
+  label: Watershed basin
+  pen: surveyors
+  chapter_pen: surveyors
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: usgs_wbd_huc8
+  authority: US Geological Survey
+  dataset: Watershed Boundary Dataset, 8-digit HUCs
+  source_url: https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/WBD/National/GDB/WBD_National_GDB.zip
+  license: Public domain (US government work)
+  vintage: 2024-12-28 (WBD loaddate)
+  retrieved: '2026-08-03'
+  verified: true
+- n: 82
+  label: Local catchment
+  pen: surveyors
+  chapter_pen: surveyors
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: usgs_wbd_huc12
+  authority: US Geological Survey
+  dataset: Watershed Boundary Dataset, 12-digit HUCs
+  source_url: https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/WBD/National/GDB/WBD_National_GDB.zip
+  license: Public domain (US government work)
+  vintage: 2024-12-28 (WBD loaddate)
+  retrieved: '2026-08-03'
+  verified: true
+- n: 83
+  label: Ecoregion
+  pen: surveyors
+  chapter_pen: surveyors
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: epa_ecoregion_l3
+  authority: US Environmental Protection Agency
+  dataset: Level III ecoregions of the continental United States
+  source_url: https://dmap-prod-oms-edc.s3.us-east-1.amazonaws.com/ORD/Ecoregions/us/us_eco_l3.zip
+  license: Public domain (US government work)
+  vintage: 2013 (pubdate 2013-04-16)
+  retrieved: '2026-08-03'
+  verified: true
+- n: 84
+  label: Ecoregion, level 4
+  pen: surveyors
+  chapter_pen: surveyors
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: epa_ecoregion_l4
+  registry_pen: surveyors
+  missing_reason: buildable
+  missing_note: Level 3 ecoregions (#83) are on the map. Level 4 is a public file I haven't added.
+  keeper: US Environmental Protection Agency
+  candidate_source:
+    name: EPA Level IV Ecoregions (CONUS)
+    maintainer: US EPA Office of Research and Development
+    url: https://dmap-prod-oms-edc.s3.us-east-1.amazonaws.com/ORD/Ecoregions/us/us_eco_l4.zip
+    verified: true
+    license: Public domain (US federal)
+    note: Direct 66 MB zip (last modified Nov 2024).
+- n: 85
+  label: Plant hardiness zone
+  pen: surveyors
+  chapter_pen: surveyors
+  pen_note: null
+  status: mapped
+  scope: national
+  layer: usda_hardiness_zone
+  authority: USDA-ARS and Oregon State PRISM Climate Group
+  dataset: 2023 USDA Plant Hardiness Zone Map
+  source_url: https://prism.oregonstate.edu/phzm/data/2023/phzm_us_zones_shp_2023.zip
+  license: Free to reproduce with credit to the PRISM Group, Oregon State University, and USDA-ARS
+  vintage: 2023 PHZM
+  retrieved: '2026-08-03'
+  verified: true
+- n: 86
+  label: Soil survey area
+  pen: surveyors
+  chapter_pen: surveyors
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: usda_soil_survey_area
+  registry_pen: surveyors
+  missing_reason: buildable
+  missing_note: USDA publishes a national file of soil survey areas. I haven't added it.
+  keeper: USDA Natural Resources Conservation Service
+  candidate_source:
+    name: SSURGO Soil Survey Area boundaries (soilsa_a_nrcs)
+    maintainer: USDA NRCS (Web Soil Survey)
+    url: https://websoilsurvey.sc.egov.usda.gov/DataAvailability/SoilDataAvailabilityShapefile.zip
+    verified: true
+    license: Public domain (US federal)
+    note: National survey-area polygon shapefile soilsa_a_nrcs (108 MB, May 2026); per-survey SSURGO data
+      is at https://www.nrcs.usda.gov/resources/data-and-reports/soil-survey-geographic-database-ssurgo.
+- n: 87
+  label: Crop reporting district
+  pen: statisticians
+  chapter_pen: surveyors
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: usda_crop_district
+  registry_pen: surveyors
+  missing_reason: buildable
+  missing_note: USDA publishes which counties belong to which district. They could be drawn from the counties
+    already on this map, but I haven't done it.
+  keeper: USDA National Agricultural Statistics Service
+  candidate_source:
+    name: Listing of Counties and Districts used by USDA-NASS
+    maintainer: USDA NASS
+    url: https://www.nass.usda.gov/sites/default/files/Data_and_Statistics/County_Data_Files/Frequently_Asked_Questions/county_list.txt
+    verified: true
+    license: Public domain (US federal)
+    note: Fixed-width text, last updated 2007-08-15, with a history flag for retired counties; the old
+      URL without /sites/default/files/ now returns 404.
+- n: 88
+  label: Public Land Survey section
+  pen: surveyors
+  chapter_pen: surveyors
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: blm_plss
+  registry_pen: surveyors
+  missing_reason: buildable
+  missing_note: The Bureau of Land Management publishes a national map service, but the downloads come
+    state by state. I haven't added it.
+  keeper: Bureau of Land Management
+  candidate_source:
+    name: BLM National PLSS CadNSDI map service
+    maintainer: Bureau of Land Management
+    url: https://gis.blm.gov/arcgis/rest/services/Cadastral/BLM_Natl_PLSS_CadNSDI/MapServer
+    verified: true
+    license: Public domain (US federal)
+    note: National map service (layer 2 is PLSS Section) with no national bulk download; bulk files are
+      per state on gbp-blm-egis.hub.arcgis.com.
+- n: 89
+  label: Historic district
+  pen: politicians
+  chapter_pen: surveyors
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: nyc_historic_district
+  registry_pen: politicians
+  missing_reason: buildable
+  missing_note: The Park Service's National Register map file is public, but it dates from 2020 and 2021,
+    and the agency says it's incomplete. I haven't added it.
+  keeper: Local landmark commissions and the National Park Service
+  candidate_source:
+    name: National Register of Historic Places public spatial data (NRIS_CR_Standards_Public.gdb)
+    maintainer: National Park Service, Cultural Resources GIS
+    url: https://irma.nps.gov/DataStore/DownloadFile/662624
+    verified: true
+    license: Public domain (US federal)
+    note: Geodatabase zip from IRMA reference 2210280, last updated 2020-2021 and documented by NPS as
+      incomplete and not current; the live service is https://mapservices.nps.gov/arcgis/rest/services/cultural_resources/nrhp_locations/MapServer.
+- n: 90
+  label: Individual landmark
+  pen: politicians
+  chapter_pen: surveyors
+  pen_note: null
+  status: mapped
+  scope: nyc
+  layer: nyc_landmark_lot
+  authority: NYC Landmarks Preservation Commission
+  dataset: 'NYC Open Data: Individual Landmark Sites'
+  source_url: https://data.cityofnewyork.us/api/geospatial/buis-pvji?method=export&format=GeoJSON
+  license: NYC Open Data terms of use
+  vintage: 2026-06-30 (Socrata rowsUpdatedAt)
+  retrieved: '2026-08-03'
+  verified: true
+- n: 91
+  label: National Historic Landmark
+  pen: congress
+  chapter_pen: surveyors
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  planned_layer: nps_nrhp
+  registry_pen: congress
+  missing_reason: buildable
+  missing_note: The Park Service lists every landmark, but the list has no coordinates. It would have
+    to be joined to the National Register map file.
+  keeper: National Park Service, for the Secretary of the Interior
+  candidate_source:
+    name: National Historic Landmarks spreadsheet
+    maintainer: National Park Service, National Register / NHL Program
+    url: https://www.nps.gov/subjects/nationalregister/upload/National-Historic-Landmarks_20260522.xlsx
+    verified: true
+    license: Public domain (US federal)
+    note: May 2026 list with no coordinates (join by Ref# to the NRHP geodatabase in k89); no separate
+      national NHL boundary file was found.
+  at_esb: true
+  esb_value: Empire State Building NHL (1986)
+  esb_evidence: 'expected, not tested: qa/esb_expected.csv (high)'
+- n: 92
+  label: Special district
+  pen: politicians
+  chapter_pen: surveyors
+  pen_note: null
+  status: missing
+  scope: null
+  layer: null
+  missing_reason: no_national_file
+  missing_note: There are about 39,500 of them and no single file.
+  keeper: Thousands of local boards set up under state law
+- n: 93
+  label: Economic development region
+  pen: congress
+  chapter_pen: surveyors
+  pen_note: 'Least certain: Congress if this means the federal EDA districts, the politicians if it means
+    state regions.'
+  status: missing
+  scope: null
+  layer: null
+  missing_reason: buildable
+  missing_note: The only national file I found comes from NADO, an association of regional development
+    groups, not from the federal EDA. I haven't added it.
+  keeper: US Economic Development Administration
+  candidate_source:
+    name: Designated Economic Development Districts layer (EDDlayer2b_Sept26)
+    maintainer: National Association of Development Organizations (NADO), not EDA
+    url: https://services8.arcgis.com/iSa23B1d0nMdPKnp/arcgis/rest/services/EDDlayer2b/FeatureServer/88
+    verified: true
+    license: Not stated (NADO-hosted ArcGIS layer)
+    note: 404 EDD polygons (Sept 2026) behind NADO's EDD map https://www.nado.org/eddmap/; eda.gov/edd
+      returns 403 to scripts and no EDA-published national file was found.
