@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>The Geography of Invisible Lines</title>
+    <meta
+      name="description"
+      content="Every kind of official boundary counted in The Geography of Invisible Lines, who drew it, where the data comes from, and the ones nobody has mapped."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23ffffff'/%3E%3Crect x='2.5' y='2.5' width='11' height='11' fill='none' stroke='%23111111' stroke-width='1.5'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.9.0/mapbox-gl.css" rel="stylesheet" />
+  </head>
+  <body>
+    <main class="ex">
+      <header class="ex-head">
+        <p class="ex-byline" id="ex-byline"></p>
+        <h1>The Geography <span class="of">of</span> Invisible Lines</h1>
+        <p class="ex-dek">
+          Every kind of official boundary I counted for the video, who drew it, where the data
+          comes from, and the ones nobody has mapped.
+        </p>
+      </header>
+
+      <dl class="ex-stats" id="ex-stats"></dl>
+
+      <div class="ex-controls">
+        <div class="ex-seg" role="group" aria-label="Group by">
+          <span class="ex-seg-label">Group by</span>
+          <button type="button" data-group="pen">Who drew it</button>
+          <button type="button" data-group="chapter">Video chapter</button>
+        </div>
+        <div class="ex-seg" role="group" aria-label="Show">
+          <button type="button" data-scope="all">All</button>
+          <button type="button" data-scope="mapped">Mapped</button>
+          <button type="button" data-scope="missing">Missing</button>
+        </div>
+        <input
+          type="search"
+          id="ex-q"
+          class="ex-search"
+          placeholder="Search, or a number like 61"
+          aria-label="Search boundary types"
+          autocomplete="off"
+        />
+        <span class="ex-on-count ex-num" id="ex-on-count" aria-live="polite"></span>
+        <button type="button" class="ex-btn" id="ex-clear">Clear all</button>
+      </div>
+
+      <div class="ex-grid">
+        <div class="ex-list" id="ex-list"></div>
+        <div class="ex-mapcol">
+          <div class="ex-mapwrap">
+            <div id="ex-map" role="region" aria-label="Map"></div>
+            <div class="ex-toast" id="ex-toast" role="status" aria-live="polite" hidden></div>
+          </div>
+          <aside class="ex-drawer" id="ex-drawer" aria-labelledby="ex-drawer-title" hidden></aside>
+        </div>
+      </div>
+
+      <section class="ex-section" aria-labelledby="ex-sources-title">
+        <div class="ex-section-head">
+          <h2 id="ex-sources-title">Sources</h2>
+          <a class="ex-btn" href="data/catalog.csv" download="invisible-lines-sources.csv">Download CSV</a>
+        </div>
+        <p class="ex-muted">
+          All <span data-count="total"></span> types, grouped by who drew them. A link marked
+          "not verified" is one I couldn't check automatically, usually because the site blocks
+          scripts. It may still open in your browser.
+        </p>
+        <div id="ex-sources"></div>
+      </section>
+
+      <section class="ex-section ex-notes" aria-labelledby="ex-notes-title">
+        <h2 id="ex-notes-title">Notes</h2>
+        <p>
+          I counted <span data-count="total"></span> kinds of official boundary for the video.
+          <span data-count="mapped"></span> of them have a file I could put on a map. The other
+          <span data-count="missing"></span> don't, and each one says why.
+        </p>
+        <p>
+          <strong>Who drew it, not the chapter.</strong> The video counts boundaries chapter by
+          chapter, and two of those chapters are mixed. This page groups each line by who
+          actually drew it. Switch to "Video chapter" to see them in the order I counted them,
+          with the counter.
+        </p>
+        <p>
+          <strong>New York only.</strong> <span data-count="nyc"></span> of the mapped types are
+          mapped for New York City only, because that's where the building is. Some have national
+          files I didn't need for the video. Others, like police precincts, only exist city by city.
+        </p>
+        <p>
+          <strong>Missing means missing.</strong> I don't draw a placeholder for a type I don't
+          have a file for. No file, no shape.
+        </p>
+        <p>
+          <strong>At the building.</strong> Each mapped type says whether its line contains the
+          Empire State Building, tested against the same file you see on the map.
+        </p>
+      </section>
+
+      <footer class="ex-foot">
+        <p>
+          Map © <a href="https://www.mapbox.com/about/maps/">Mapbox</a> ©
+          <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>. Census boundaries:
+          US Census Bureau, TIGER/Line 2025. Time zones:
+          <a href="https://github.com/evansiroky/timezone-boundary-builder">timezone-boundary-builder</a>
+          by Evan Siroky, from OpenStreetMap data, under the
+          <a href="https://opendatacommons.org/licenses/odbl/1-0/">ODbL 1.0</a>. Plant hardiness
+          zones: USDA-ARS and the PRISM Group, Oregon State University,
+          <a href="https://prism.oregonstate.edu/">prism.oregonstate.edu</a>, retrieved Aug 3,
+          2026. New York City layers: NYC Open Data and the NYC Department of City Planning.
+          Balancing authorities and grid operators: HIFLD, archived by ICPSR DataLumos. Every
+          other source is listed in the table above.
+        </p>
+      </footer>
+    </main>
+    <script type="module" src="/src/explore/main.ts"></script>
+  </body>
+</html>
